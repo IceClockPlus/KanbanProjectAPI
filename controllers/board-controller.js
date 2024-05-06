@@ -34,8 +34,23 @@ const createBoard = async (req, res) => {
     }
 }
 
+const deleteBoard = async (req, res) => {
+    try 
+    {
+        const id = req.params.id;
+        const deletedBoard = await Board.findOneAndDelete({_id: id});
+        if(!deletedBoard) return res.status(400).json({ message: 'Board not found' });
+
+        return res.status(200).json({ message: 'Board has been deleted'});
+
+    } catch (error) {
+        return res.status(500).json({ message: error.message});
+    }
+}
+
 module.exports = {
     createBoard,
     getBoards,
-    getBoardById
+    getBoardById,
+    deleteBoard
 };
