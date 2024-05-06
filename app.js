@@ -1,12 +1,37 @@
 const express = require('express');
-const router = require('./routes');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 const boardRoutes = require('./routes/board-routes');
+
+const options = {
+    definition: {
+        openapi: "3.1.0",
+        info: {
+            title: "Kanban Project API",
+            version: "1.0.0",
+            description: "This is a API documentation"
+        },
+        servers: [
+            {
+                url: "http://localhost:3000"
+            }
+        ]
+    },
+    apis: ["./routes/*.js"]
+
+};
+
+const specs = swaggerJsdoc(options);
 
 const mongoose = require('mongoose');
 const app = express();
 const port = 3000;
 
+app.use('/api-docs',
+    swaggerUi.serve,
+    swaggerUi.setup(specs)
+);
 
 app.use(express.json());
 app.use('/api/v1/boards', boardRoutes);
