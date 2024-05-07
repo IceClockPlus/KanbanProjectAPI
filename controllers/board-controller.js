@@ -17,7 +17,11 @@ const getBoardById = async (req, res) => {
             res.status(400).json({message: 'Provided Id is invalid'});
         }
 
-        const board = await Board.find({_id: id});
+        const board = await Board.findById(id);
+        if(!board) {
+            return res.status(404).json({ message: 'Board not found'});
+        }
+
         res.status(200).json(board);
     } catch (error) {
         res.status(500).json({message: error.message});
