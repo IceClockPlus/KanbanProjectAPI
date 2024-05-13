@@ -6,13 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "production": "pm2 start app.js --name apiKanban"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2",
     "mongoose": "^8.3.3",
+    "pm2": "^5.3.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"
   },
