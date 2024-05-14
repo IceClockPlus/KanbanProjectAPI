@@ -4,6 +4,7 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
 const boardRoutes = require('./routes/board-routes');
+const userRoutes = require('@routes/user-routes');
 
 const options = {
     definition: {
@@ -36,6 +37,7 @@ app.use('/api-docs',
 
 app.use(express.json());
 app.use('/api/v1/boards', boardRoutes);
+app.use('/api/v1/users', userRoutes);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
