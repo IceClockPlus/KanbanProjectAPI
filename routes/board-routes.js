@@ -17,6 +17,14 @@ const {
  *          properties:
  *              message:
  *                  type: string
+ *      NewBoardRequest:
+ *          type: object
+ *          required:
+ *              - name
+ *          properties:
+ *              name:
+ *                  type: string
+ *                  description: Board name
  *      Board:
  *          type: object
  *          required:
@@ -60,6 +68,24 @@ const {
  *                          type: array
  *                          items:
  *                              $ref: '#/components/schemas/Board'
+ *  post:
+ *      summary: Create a new board
+ *      tags: [Boards]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/NewBoardRequest'
+ *          responses:
+ *              200:
+ *                  description: The created board
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              $ref: '#/components/schemas/Board'
+ *              500:
+ *                  description: Unexpected server error
  * /api/v1/boards/{id}:
  *  get:
  *      summary: Get board by id
