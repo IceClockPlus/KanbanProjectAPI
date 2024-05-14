@@ -1,3 +1,4 @@
+require('dotenv').config();
 require('module-alias/register');
 const express = require('express');
 const swaggerJsdoc = require('swagger-jsdoc');
@@ -39,10 +40,13 @@ app.use(express.json());
 app.use('/api/v1/boards', boardRoutes);
 app.use('/api/v1/users', userRoutes);
 
+const dbConnection = process.env.MONGO_DB_CONNECTION || '';
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
+    console.log(process.env.JWT_SECRET);
 })
 
-mongoose.connect('mongodb://127.0.0.1:27017/KanbanProject')
+mongoose.connect(dbConnection)
 .then(() => console.log('Connection to MongoDB established'))
 .catch(() => console.error('Unexpected error when trying to connect MongoDB'));
