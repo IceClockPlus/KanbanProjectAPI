@@ -1,9 +1,15 @@
-const users = [
-    {id: 1, name: 'Name 1'},
-    {id: 2, name: 'Name 2'},
-    {id: 3, name: 'Name 3'}
-];
+const { registerUser } = require('@features/users/register-user-command');
 
-exports.getUsers = (request, response) => {
-    response.status(200).json({success: true, count: users.length, data: users});
+const registerNewUser = async (req, res) => {
+    try {
+        const createdUser = await registerUser(req.body);
+        res.status(200).json(createdUser);
+
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+}
+
+module.exports = {
+    registerNewUser
 }
