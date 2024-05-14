@@ -1,4 +1,5 @@
 const { registerUser } = require('@features/users/register-user-command');
+const { authenticateUserCommand } = require('@features/users/authenticate-user');
 
 const registerNewUser = async (req, res) => {
     try {
@@ -10,6 +11,20 @@ const registerNewUser = async (req, res) => {
     }
 }
 
+const authenticateUser =  async (req, res) => {
+    try{
+        const authResponse = await authenticateUserCommand(req.body);
+        if(!authResponse.success){
+            res.status(401).json({ message: authResponse.message});
+        } else {
+            res.status(200).json(authResponse);
+        }
+    }catch(error) {
+        res.status(500).json({message: error.message});
+    }
+};
+
 module.exports = {
-    registerNewUser
+    registerNewUser,
+    authenticateUser
 }
