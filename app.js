@@ -1,5 +1,5 @@
+require('module-alias/register');
 const express = require('express');
-const router = require('./routes');
 
 const boardRoutes = require('./routes/board-routes');
 

@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@routes/*":[
+                "routes/*"
+            ],
+            "@controllers/*": [
+                "controllers/*"
+            ],
+            "@domain/*": ["domain/*"] 
+        }
+    }
+}
