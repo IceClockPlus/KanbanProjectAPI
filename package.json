@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "argon2": "^0.40.1",
     "express": "^4.19.2",
     "module-alias": "^2.2.3",
     "mongoose": "^8.3.3",
@@ -23,9 +24,10 @@
     "nodemon": "^3.1.0"
   },
   "_moduleAliases": {
-    "@":".",
+    "@": ".",
     "@routes": "routes",
     "@controllers": "controllers",
-    "@domain": "domain"
+    "@domain": "domain",
+    "@features": "features"
   }
 }
