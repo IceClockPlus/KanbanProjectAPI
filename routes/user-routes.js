@@ -3,8 +3,11 @@ const router = express.Router();
 
 const {
  registerNewUser,
- authenticateUser
+ authenticateUser,
+ getMyInfo
 } = require('@controllers/user-controllers');
+
+const { authorize } = require('./../middlewares/auth-middleware')
 
 /**
  * @swagger
@@ -105,4 +108,5 @@ const {
  */
 router.post('/', registerNewUser);
 router.post('/login', authenticateUser);
+router.get('/myInfo', authorize, getMyInfo);
 module.exports = router;

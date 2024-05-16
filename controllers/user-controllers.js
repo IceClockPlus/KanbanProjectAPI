@@ -24,7 +24,12 @@ const authenticateUser =  async (req, res) => {
     }
 };
 
+const getMyInfo = async (req, res) => {
+    res.status(200).json({ auth: req.auth});
+}
+
 module.exports = {
     registerNewUser,
-    authenticateUser
+    authenticateUser,
+    getMyInfo
 }
