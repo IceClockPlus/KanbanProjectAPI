@@ -25,7 +25,7 @@ const authenticateUser =  async (req, res) => {
 };
 
 const getMyInfo = async (req, res) => {
-    res.status(200).json({ auth: req.auth});
+    res.status(200).json({ user: req.user});
 }
 
 module.exports = {

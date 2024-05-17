@@ -29,7 +29,7 @@ const specs = swaggerJsdoc(options);
 
 const mongoose = require('mongoose');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 80;
 
 app.use('/api-docs',
     swaggerUi.serve,

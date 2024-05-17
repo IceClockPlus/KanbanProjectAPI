@@ -6,19 +6,22 @@ const boardListSchema = mongoose.Schema(
     }
 );
 
+const boardUserShema = mongoose.Schema(
+    {
+        _id: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+        name: { type: String, required: true },
+        lastName: { type: String, required: true },        
+        avatar: { type: String }
+    }, { _id: false }
+);
+
 const boardSchema = mongoose.Schema(
     {
         name: {
             type: String,
             required: [true, "Please enter board name"]
         },
-        lists: [
-            {
-                name: {
-                    type: String
-                }
-            }
-        ]
+        users: [boardUserShema]
     },
     {
         timestamps: true
