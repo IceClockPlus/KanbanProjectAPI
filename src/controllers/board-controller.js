@@ -1,5 +1,6 @@
 const Board = require('@domain/entities/board.model');
 const User = require('@domain/entities/user.model');
+const createBoardAsync = require('@features/boards/create-board-command');
 var ObjectId = require('mongoose')
 
 const getBoards = async (req, res) => {
@@ -32,20 +33,13 @@ const getBoardById = async (req, res) => {
 const createBoard = async (req, res) => {
     try {
         const { body, user } = req;
+        const createParams = {
+            userId: user.userId,
+            boardName: body.name
+        };
 
-       const loggedUser = await User.findById(user.userId);
-       const newBoard = new Board({
-        name: body.name,
-        users: [
-            {
-                _id: loggedUser._id,
-                name: loggedUser.name,
-                lastName: loggedUser.lastName,                
-            }
-        ]
-       });
-       await newBoard.save();
-        res.status(200).json(newBoard);
+        const response = await createBoardAsync(createParams);
+        res.status(200).json(response);
 
     } catch (error) {
         res.status(500).json({message: error.message});
