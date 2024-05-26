@@ -7,6 +7,8 @@ const swaggerUi = require('swagger-ui-express');
 const boardRoutes = require('@routes/board-routes');
 const userRoutes = require('@routes/user-routes');
 
+const errorHadlerMiddleware = require('@middlewares/error-middleware')
+
 const options = {
     definition: {
         openapi: "3.1.0",
@@ -37,6 +39,7 @@ app.use('/api-docs',
 );
 
 app.use(express.json());
+app.use(errorHadlerMiddleware);
 app.use('/api/v1/boards', boardRoutes);
 app.use('/api/v1/users', userRoutes);
 
