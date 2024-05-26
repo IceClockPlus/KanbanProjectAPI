@@ -4,7 +4,7 @@ const express = require('express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
-const boardRoutes = require('./routes/board-routes');
+const boardRoutes = require('@routes/board-routes');
 const userRoutes = require('@routes/user-routes');
 
 const options = {

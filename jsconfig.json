@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
+        "baseUrl": "./src",
         "paths": {
             "@routes/*":[
                 "routes/*"
@@ -9,7 +9,8 @@
                 "controllers/*"
             ],
             "@domain/*": ["domain/*"],
-            "@features/*": ["features/*"]
+            "@features/*": ["features/*"],
+            "@middlewares/*": ["middlewares/*"]
         }
     }
 }

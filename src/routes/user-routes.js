@@ -7,7 +7,7 @@ const {
  getMyInfo
 } = require('@controllers/user-controllers');
 
-const { authorize } = require('./../middlewares/auth-middleware')
+const { authorize } = require('@middlewares/auth-middleware')
 
 /**
  * @swagger

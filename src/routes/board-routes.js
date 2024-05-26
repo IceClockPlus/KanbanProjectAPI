@@ -6,8 +6,8 @@ const {
     getBoardById,
     createBoard,
     deleteBoard
-} = require('../controllers/board-controller');
-const { authorize } = require('./../middlewares/auth-middleware')
+} = require('@controllers/board-controller');
+const { authorize } = require('@middlewares/auth-middleware')
 
 /**
  * @swagger

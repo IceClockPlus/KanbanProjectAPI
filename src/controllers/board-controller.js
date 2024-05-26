@@ -1,4 +1,4 @@
-const Board = require('./../domain/entities/board.model');
+const Board = require('@domain/entities/board.model');
 const User = require('@domain/entities/user.model');
 var ObjectId = require('mongoose')
 

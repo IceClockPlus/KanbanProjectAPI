@@ -27,10 +27,11 @@
     "nodemon": "^3.1.0"
   },
   "_moduleAliases": {
-    "@": ".",
-    "@routes": "routes",
-    "@controllers": "controllers",
-    "@domain": "domain",
-    "@features": "features"
+    "@": "src",
+    "@routes": "src/routes",
+    "@controllers": "src/controllers",
+    "@domain": "src/domain",
+    "@features": "src/features",
+    "@middlewares": "src/middlewares"
   }
 }
