@@ -1,12 +1,6 @@
 const mongoose = require('mongoose');
 const {UserBoardType} = require('@domain/enums/board-enums');
 
-const boardListSchema = mongoose.Schema(
-    {
-        
-    }
-);
-
 const userBoardTypeValues = Object.values(UserBoardType).map(symbol =>symbol.toString());
 const boardUserShema = mongoose.Schema(
     {
@@ -28,6 +22,10 @@ const boardSchema = mongoose.Schema(
         name: {
             type: String,
             required: [true, "Please enter board name"]
+        },
+        description: {
+            type: String,
+            required: false
         },
         users: [boardUserShema]
     },

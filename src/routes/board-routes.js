@@ -12,6 +12,11 @@ const { authorize } = require('@middlewares/auth-middleware')
 /**
  * @swagger
  * components:
+ *  securitySchemes:
+ *      bearerAuth:
+ *      type: http
+ *      scheme: bearer
+ *      bearerFormat: JWT
  *  schemas:
  *      ErrorResponse:
  *          type: object

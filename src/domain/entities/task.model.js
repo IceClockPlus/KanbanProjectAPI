@@ -2,8 +2,10 @@ const mongoose = require('mongoose');
 
 const taskBoardSchema = mongoose.Schema(
     {
+        _id: { type: mongoose.Schema.Types.ObjectId, ref: 'Board' },
         name: { type: String, required: true},
-    }
+    },
+    { _id: false }
 );
 
 const taskListSchema = mongoose.Schema(
@@ -17,7 +19,8 @@ const taskSchema =  mongoose.Schema(
        name: { type: String, required: true },
        description: { type: String, required: false },
        board: { type: taskBoardSchema, required: false },
-       list: { type: taskListSchema, required: false }
+       list: { type: taskListSchema, required: false },
+       storyPoints: { type: Number, required: false }
     }
 );
 
