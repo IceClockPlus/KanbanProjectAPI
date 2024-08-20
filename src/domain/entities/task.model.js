@@ -8,8 +8,9 @@ const taskBoardSchema = mongoose.Schema(
     { _id: false }
 );
 
-const taskListSchema = mongoose.Schema(
+const taskStageSchema = mongoose.Schema(
     {
+        _id: { type: mongoose.Schema.Types.ObjectId},
         name: { type: String, required: true}
     }
 )
@@ -19,7 +20,7 @@ const taskSchema =  mongoose.Schema(
        name: { type: String, required: true },
        description: { type: String, required: false },
        board: { type: taskBoardSchema, required: false },
-       list: { type: taskListSchema, required: false },
+       stage: { type: taskStageSchema, required: false },
        storyPoints: { type: Number, required: false }
     }
 );

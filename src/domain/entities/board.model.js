@@ -17,6 +17,15 @@ const boardUserShema = mongoose.Schema(
     }, { _id: false }
 );
 
+const boardStageSchema = mongoose.Schema(
+    {
+        _id:{ type: mongoose.Schema.Types.ObjectId},
+        name: { type: String, required: true },
+        maxTasks: { type: Number, required: false, default: null},
+        tasks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}]
+    }
+)
+
 const boardSchema = mongoose.Schema(
     {
         name: {
@@ -27,7 +36,8 @@ const boardSchema = mongoose.Schema(
             type: String,
             required: false
         },
-        users: [boardUserShema]
+        users: [boardUserShema],
+        stages: [boardStageSchema]
     },
     {
         timestamps: true
