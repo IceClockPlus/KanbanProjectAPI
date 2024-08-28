@@ -10,7 +10,7 @@ const taskBoardSchema = mongoose.Schema(
 
 const taskStageSchema = mongoose.Schema(
     {
-        _id: { type: mongoose.Schema.Types.ObjectId},
+        _id: { type: mongoose.Schema.Types.ObjectId, required: true},
         name: { type: String, required: true}
     }
 )

@@ -17,6 +17,17 @@ const createBoardAsync = async (request) => {
                     name: user.name,
                     lastName: user.lastName
                 }
+            ],
+            stages:[
+                {
+                    name: 'To do'
+                },
+                {
+                    name: 'Working'
+                },
+                {
+                    name: 'Done'
+                }
             ]
         });
         await newBoard.save();
@@ -35,4 +46,4 @@ const createBoardAsync = async (request) => {
     }
 };
 
-module.exports.createBoardAsync = createBoardAsync;
+module.exports = createBoardAsync;

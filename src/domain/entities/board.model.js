@@ -17,9 +17,8 @@ const boardUserShema = mongoose.Schema(
     }, { _id: false }
 );
 
-const boardStageSchema = mongoose.Schema(
+const boardStageSchema = new mongoose.Schema(
     {
-        _id:{ type: mongoose.Schema.Types.ObjectId},
         name: { type: String, required: true },
         maxTasks: { type: Number, required: false, default: null},
         tasks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}]
