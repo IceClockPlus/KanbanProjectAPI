@@ -3,7 +3,14 @@ const UserBoardType = Object.freeze({
     Guest: 'Guest'
 });
 
+const BoardStageType = Object.freeze({
+    Start: 'Start',
+    End: 'End',
+    Other: 'Other'
+})
+
 
 module.exports = {
-    UserBoardType
+    UserBoardType,
+    BoardStageType
 };
