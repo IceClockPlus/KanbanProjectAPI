@@ -1,5 +1,6 @@
 const Board = require('@domain/entities/board.model');
 const User = require('@domain/entities/user.model');
+const { BoardStageType } = require('@domain/enums/board-enums');
 
 const createBoardAsync = async (request) => {
     try {
@@ -20,13 +21,16 @@ const createBoardAsync = async (request) => {
             ],
             stages:[
                 {
-                    name: 'To do'
+                    name: 'To do',
+                    type: BoardStageType.Start
                 },
                 {
-                    name: 'Working'
+                    name: 'Working',
+                    type: BoardStageType.Other
                 },
                 {
-                    name: 'Done'
+                    name: 'Done',
+                    type: BoardStageType.End
                 }
             ]
         });
