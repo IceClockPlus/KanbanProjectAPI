@@ -1,11 +1,13 @@
 require('dotenv').config();
 require('module-alias/register');
 const express = require('express');
+const WebSocket = require('ws');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
 const boardRoutes = require('@routes/board-routes');
 const userRoutes = require('@routes/user-routes');
+
 
 const errorHadlerMiddleware = require('@middlewares/error-middleware')
 
@@ -32,6 +34,21 @@ const specs = swaggerJsdoc(options);
 const mongoose = require('mongoose');
 const app = express();
 const port = process.env.PORT || 80;
+
+const wss = new WebSocket.Server({port: 8080});
+wss.on('connection', (ws) => {
+ ws.send('Connection established! Welcome');
+
+ ws.on('message', (message) => {
+    console.log('Received message:', message);
+    ws.send('Message received successfully!');
+ })
+});
+
+
+wss.on('close', () => {
+    console.log('A connection was closed!')
+});
 
 app.use('/api-docs',
     swaggerUi.serve,
