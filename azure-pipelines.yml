@@ -32,7 +32,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      vmImage: $(vmImageName)
+      name: 'Self-HostedPool'
 
     steps:
     - task: NodeTool@0
@@ -72,7 +72,7 @@ stages:
     displayName: Deploy
     environment: $(environmentName)
     pool:
-      vmImage: $(vmImageName)
+      name: 'Self-HostedPool'
     strategy:
       runOnce:
         deploy:
