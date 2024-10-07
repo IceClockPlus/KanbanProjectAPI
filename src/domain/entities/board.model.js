@@ -12,12 +12,12 @@ const boardUserShema = mongoose.Schema(
             type: String, 
             required: true, 
             enum: userBoardTypeValues,
-            default: UserBoardType.Owner.toString()
+            default: UserBoardType.Owner
         }
     }, { _id: false }
 );
 
-const boardStageSchema = new mongoose.Schema(
+const boardStageSchema = mongoose.Schema(
     {
         name: { type: String, required: true },
         maxTasks: { type: Number, required: false, default: null},

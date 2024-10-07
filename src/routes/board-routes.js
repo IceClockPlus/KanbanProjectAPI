@@ -5,7 +5,8 @@ const {
     getBoards,
     getBoardById,
     createBoard,
-    deleteBoard
+    deleteBoard,
+    registerTask
 } = require('@controllers/board-controller');
 const { authorize } = require('@middlewares/auth-middleware')
 
@@ -114,6 +115,7 @@ const { authorize } = require('@middlewares/auth-middleware')
 router.get('/', getBoards);
 router.get('/:id', getBoardById);
 router.post('/', authorize, createBoard);
+router.post('/:id/task', authorize, registerTask);
 router.delete('/:id', deleteBoard);
 
 module.exports = router;

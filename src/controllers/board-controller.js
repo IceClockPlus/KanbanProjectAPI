@@ -1,6 +1,7 @@
 const Board = require('@domain/entities/board.model');
 const User = require('@domain/entities/user.model');
 const createBoardAsync = require('@features/boards/create-board-command');
+const registerTaskAsync = require('@features/board-tasks/register-task-command');
 var ObjectId = require('mongoose')
 
 const getBoards = async (req, res) => {
@@ -46,6 +47,23 @@ const createBoard = async (req, res) => {
     }
 }
 
+const registerTask = async (req, res) => {
+    try 
+    {
+        const { body, user } = req;
+        const registerTaskRequest = {
+            name: body.name,
+            description: body.description,
+            storyPoints: body.storyPoints,
+            boardId: req.params.id
+        };
+        const response = await registerTaskAsync(registerTaskRequest)
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+}
+
 const deleteBoard = async (req, res) => {
     try 
     {
@@ -62,6 +80,7 @@ const deleteBoard = async (req, res) => {
 
 module.exports = {
     createBoard,
+    registerTask,
     getBoards,
     getBoardById,
     deleteBoard
