@@ -6,6 +6,9 @@
 trigger:
 - main
 
+pool:
+  name: 'Self-HostedPool'
+
 variables:
   # Import library variables
   group: 'KanbanProjectAPI'
