@@ -11,7 +11,7 @@ pool:
 
 variables:
   # Import library variables
-  group: Kanban-API-Settings
+  group: KanbanApiVariables
 
   # Azure Resource Manager connection created during pipeline creation
   azureSubscription: 'c0b6260c-f90c-4c7a-9f1a-3ea57b1cebf2'
@@ -49,6 +49,7 @@ stages:
         echo "$(DATABASE_CONNECTION_STRING)"
         echo "$(JWT_SECRET)"
         echo "$(PORT)"
+        echo $(KanbanApiVariables)
       displayName: "Check Variables"
 
 
