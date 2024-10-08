@@ -52,4 +52,4 @@ app.listen(port, () => {
 
 mongoose.connect(dbConnection)
 .then(() => console.log('Connection to MongoDB established'))
-.catch(() => console.error('Unexpected error when trying to connect MongoDB'));
+.catch((err) => console.error('Unexpected error when trying to connect MongoDB', err));
