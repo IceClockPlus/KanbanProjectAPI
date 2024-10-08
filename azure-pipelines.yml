@@ -11,7 +11,7 @@ pool:
 
 variables:
   # Import library variables
-  group: 'KanbanProjectAPI'
+  group: Kanban-API-Settings
 
   # Azure Resource Manager connection created during pipeline creation
   azureSubscription: 'c0b6260c-f90c-4c7a-9f1a-3ea57b1cebf2'
