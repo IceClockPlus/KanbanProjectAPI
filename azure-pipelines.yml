@@ -10,20 +10,26 @@ pool:
   name: 'Self-HostedPool'
 
 variables:
-  # Import library variables
-  group: KanbanApiVariables
+  - group: KanbanApiVariables
+  - name: azureSubscription
+    value: 'c0b6260c-f90c-4c7a-9f1a-3ea57b1cebf2'
+  - name: webAppName
+    value: 'kanban-project'
+  - name: environmentName
+    value: 'kanban-project'
+
 
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: 'c0b6260c-f90c-4c7a-9f1a-3ea57b1cebf2'
-
+  #azureSubscription: 'c0b6260c-f90c-4c7a-9f1a-3ea57b1cebf2'
+  
   # Web app name
-  webAppName: 'kanban-project'
+  #webAppName: 'kanban-project'
 
   # Environment name
-  environmentName: 'kanban-project'
+  #environmentName: 'kanban-project'
 
   # Agent VM image name
-  vmImageName: 'ubuntu-latest'
+  #vmImageName: 'ubuntu-latest'
 
 stages:
 - stage: Build
