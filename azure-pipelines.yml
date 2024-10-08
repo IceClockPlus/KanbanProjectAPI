@@ -94,7 +94,6 @@ stages:
               runtimeStack: 'NODE|20LTS'
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
               appSettings: |
-                PORT=$(PORT) 
                 MONGO_DB_CONNECTION=$(DATABASE_CONNECTION_STRING) 
                 JWT_SECRET=$(JWT_SECRET)
               startUpCommand: 'npm run serve'
