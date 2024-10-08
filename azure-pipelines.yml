@@ -51,13 +51,6 @@ stages:
         npm run build --if-present
         npm run test --if-present
       displayName: 'npm install, build and test'
-    - script: |
-        echo "$(DATABASE_CONNECTION_STRING)"
-        echo "$(JWT_SECRET)"
-        echo "$(PORT)"
-        echo $(KanbanApiVariables)
-      displayName: "Check Variables"
-
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
@@ -94,7 +87,6 @@ stages:
               runtimeStack: 'NODE|20LTS'
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
               appSettings: |
-                -PORT $(PORT)
                 -MONGO_DB_CONNECTION $(DATABASE_CONNECTION_STRING) 
                 -JWT_SECRET $(JWT_SECRET)
               startUpCommand: 'npm run serve'
