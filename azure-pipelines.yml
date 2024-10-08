@@ -49,6 +49,11 @@ stages:
         MONGO_DB_CONNECTION: $(DATABASE_CONNECTION_STRING)
         JWT_SECRET: $(JWT_SECRET)
         PORT: $(PORT)
+    - script: |
+        echo "$(DATABASE_CONNECTION_STRING)"
+        echo "$(JWT_SECRET)"
+        echo "$(PORT)"
+      displayName: "Check Variables"
 
 
     - task: ArchiveFiles@2
