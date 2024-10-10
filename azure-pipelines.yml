@@ -76,4 +76,4 @@ stages:
               appSettings: |
                -MONGO_DB_CONNECTION $(DATABASE_CONNECTION_STRING) 
                -JWT_SECRET $(JWT_SECRET)
-              startUpCommand: 'npm run start'
+              startUpCommand: 'npm run serve'
