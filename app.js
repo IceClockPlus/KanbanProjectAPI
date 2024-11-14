@@ -33,7 +33,7 @@ const specs = swaggerJsdoc(options);
 
 const mongoose = require('mongoose');
 const app = express();
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 8080;
 
 const wss = new WebSocket.Server({port: 8080});
 wss.on('connection', (ws) => {
@@ -69,4 +69,4 @@ app.listen(port, () => {
 
 mongoose.connect(dbConnection)
 .then(() => console.log('Connection to MongoDB established'))
-.catch(() => console.error('Unexpected error when trying to connect MongoDB'));
+.catch((err) => console.error('Unexpected error when trying to connect MongoDB', err));
