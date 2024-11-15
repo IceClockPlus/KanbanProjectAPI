@@ -4,6 +4,8 @@ const express = require('express');
 const WebSocket = require('ws');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const http = require('http');
+const {Server} = require('socket.io');
 
 const boardRoutes = require('@routes/board-routes');
 const userRoutes = require('@routes/user-routes');
@@ -30,25 +32,19 @@ const options = {
 };
 
 const specs = swaggerJsdoc(options);
-
 const mongoose = require('mongoose');
 const app = express();
+
+const server = http.createServer(app); // Crear el servidor HTTP
+const io = new Server(server, {
+    cors:{
+        origin: '*',
+        methods: ['GET', 'POST']
+    }
+}); // Enlazar Socket.IO con el servidor
 const port = process.env.PORT || 80;
 
-const wss = new WebSocket.Server({port: 8080});
-wss.on('connection', (ws) => {
- ws.send('Connection established! Welcome');
 
- ws.on('message', (message) => {
-    console.log('Received message:', message);
-    ws.send('Message received successfully!');
- })
-});
-
-
-wss.on('close', () => {
-    console.log('A connection was closed!')
-});
 
 app.use('/api-docs',
     swaggerUi.serve,
@@ -60,12 +56,30 @@ app.use(errorHadlerMiddleware);
 app.use('/api/v1/boards', boardRoutes);
 app.use('/api/v1/users', userRoutes);
 
+
+io.on('connection', (socket) => {
+    console.log('Client connected');
+  
+    // Handle messages from the client
+    socket.on('message', (message) => {
+      console.log('Message received:', message);
+      
+      // Send message to all clients, including the one that sent the message
+      io.emit('message', message);
+    });
+  
+    // Handle disconnections
+    socket.on('disconnect', () => {
+      console.log('Client disconnected');
+    });
+});
+
 const dbConnection = process.env.MONGO_DB_CONNECTION || '';
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-    console.log(process.env.JWT_SECRET);
-})
+server.listen(3000, () => {
+    console.log('Servidor escuchando en http://localhost:3000');
+});
+
 
 mongoose.connect(dbConnection)
 .then(() => console.log('Connection to MongoDB established'))
