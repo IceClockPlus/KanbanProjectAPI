@@ -1,6 +1,6 @@
 const Board = require('@domain/entities/board.model');
 const User = require('@domain/entities/user.model');
-const createBoardAsync = require('@features/boards/create-board-command');
+const BoardList = require('@domain/entities/list.model');
 const registerTaskAsync = require('@features/board-tasks/register-task-command');
 var ObjectId = require('mongoose')
 
@@ -38,9 +38,35 @@ const createBoard = async (req, res) => {
             userId: user.userId,
             boardName: body.name
         };
+        const requesterUser = await User.findById(user.userId);
+        const newBoard = new Board({
+            name: body.name,
+            description: body.description,
+            users: [
+                {
+                    _id: requesterUser._id,
+                    fullName: `${requesterUser.name} ${requesterUser.lastName}`
+                }
+            ]
+        });
+        await newBoard.save();
+        const listForNewBoard = [
+            {
+                name: 'To do',
+                boardId: newBoard._id,
+            },
+            {
+                name: 'Working',
+                boardId: newBoard._id
+            },
+            {
+                name: 'Done',
+                boardId: newBoard._id
+            }
+        ];
+        await BoardList.insertMany(listForNewBoard);
 
-        const response = await createBoardAsync(createParams);
-        res.status(200).json(response);
+        res.status(200).json(newBoard);
 
     } catch (error) {
         res.status(500).json({message: error.message});
