@@ -5,8 +5,7 @@ const userBoardTypeValues = Object.values(UserBoardType).map(symbol =>symbol.toS
 const boardUserShema = mongoose.Schema(
     {
         _id: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-        name: { type: String, required: true },
-        lastName: { type: String, required: true },        
+        fullName: { type: String, required: true },
         avatar: { type: String },
         type: { 
             type: String, 
@@ -43,7 +42,6 @@ const boardSchema = mongoose.Schema(
             required: false
         },
         users: [boardUserShema],
-        stages: [boardStageSchema]
     },
     {
         timestamps: true
