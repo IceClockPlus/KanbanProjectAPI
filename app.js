@@ -9,6 +9,7 @@ const {Server} = require('socket.io');
 
 const boardRoutes = require('@routes/board-routes');
 const userRoutes = require('@routes/user-routes');
+const issueRoutes = require('@routes/issue-routes');
 
 
 const errorHadlerMiddleware = require('@middlewares/error-middleware')
@@ -55,7 +56,7 @@ app.use(express.json());
 app.use(errorHadlerMiddleware);
 app.use('/api/v1/boards', boardRoutes);
 app.use('/api/v1/users', userRoutes);
-
+app.use('/api/v1/issues', issueRoutes);
 
 io.on('connection', (socket) => {
     console.log('Client connected');
