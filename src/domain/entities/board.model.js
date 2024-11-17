@@ -17,19 +17,20 @@ const boardUserShema = mongoose.Schema(
     }, { _id: false }
 );
 
-const boardStageSchema = mongoose.Schema(
-    {
-        name: { type: String, required: true },
-        maxTasks: { type: Number, required: false, default: null},
-        type: {
-            type: String,
-            required: true,
-            enum: BoardStageType,
-            default: BoardStageType.Other
-        },
-        tasks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}]
-    }
-)
+// const boardStageSchema = mongoose.Schema(
+//     {
+        
+//         name: { type: String, required: true },
+//         maxTasks: { type: Number, required: false, default: null},
+//         type: {
+//             type: String,
+//             required: true,
+//             enum: BoardStageType,
+//             default: BoardStageType.Other
+//         },
+//         tasks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}]
+//     }
+// )
 
 const boardSchema = mongoose.Schema(
     {
