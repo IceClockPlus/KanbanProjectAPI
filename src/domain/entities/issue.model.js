@@ -8,6 +8,16 @@ const issueUser = mongoose.Schema({
     avatar: { type: String }
 });
 
+const issueList = mongoose.Schema({
+    _id: { type: mongoose.Schema.Types.ObjectId, ref: 'List'},
+    name: { type: String }
+});
+
+const issueBoard = mongoose.Schema({
+    _id: { type: mongoose.Schema.Types.ObjectId, ref: 'Board'},
+    name: { type: String}
+});
+
 const issueSchema = mongoose.Schema({
     name: { type: String, required: true },
     description: {
@@ -16,7 +26,9 @@ const issueSchema = mongoose.Schema({
     storyPoints: {
         type: Number, required: false
     },
-    assignedTo: { type: issueUser, required: false}
+    assignedTo: { type: issueUser, required: false},
+    board: { type: issueBoard, required: false },
+    list: { type: issueList, required: false }
 
 },{
     timestamps: true

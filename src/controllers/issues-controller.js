@@ -1,4 +1,6 @@
 const Issue = require('@domain/entities/issue.model');
+const List = require('@domain/entities/list.model');
+const Board = require('@domain/entities/board.model');
 const ObjectId = require('mongoose');
 
 const getIssueById = async (req, res) => {
@@ -15,6 +17,23 @@ const getIssueById = async (req, res) => {
 const createIssue = async (req, res) => {
     try {
         const { body } = req;
+
+
+        if(body.boardId) {
+            const board = Board.aggregate([
+                { $match: {_id: ObjectId(body.boardId)}},
+                {
+                    $lookup: {
+                        from: 'Lists',
+                        localField: '_id',
+                        foreignField: "boardId",
+                        as: 'lists'
+                    }
+                }
+            ]);
+            
+        }
+
         const issue = new Issue({
            name: body.name,
            description: body.description,
