@@ -19,9 +19,11 @@ const createIssue = async (req, res) => {
     try {
         const { body } = req;
 
+        let board = null;
+    
 
         if(body.boardId) {
-            const board = await Board.aggregate([
+            board = await Board.aggregate([
                 { $match: {_id: mongoose.Types.ObjectId.createFromHexString(body.boardId)}},
                 {
                     $lookup: {
@@ -31,16 +33,41 @@ const createIssue = async (req, res) => {
                         as: 'lists'
                     }
                 }
-            ])[1];
-            
+            ]);
+            if(!board) return res.status(404).json({message: 'Board not found'});            
         }
-        
+
+        const firstList = board[0]?.lists[0];
+
         const issue = new Issue({
            name: body.name,
            description: body.description,
-            storyPoints: body.storyPoints
+            storyPoints: body.storyPoints,
+            board: board ? {
+                _id: board._id,
+                name: board.name
+            } : null,
+            list: firstList ? {
+                _id: firstList._id,
+                name: firstList.name
+            } : null,
         });
         await issue.save();
+
+        if(firstList){
+            const newIssueList = {
+                _id: issue._id,
+                name: issue.name
+            };
+            await List.updateOne({_id: firstList._id},
+            {
+                $push: {
+                    issues: newIssueList
+                }
+            });
+        }
+
+
         res.status(201).json(issue);
     } catch (error) {
         res.status(500).json({message: error.message});        
