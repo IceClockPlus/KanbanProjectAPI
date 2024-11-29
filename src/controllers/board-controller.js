@@ -2,7 +2,8 @@ const Board = require('@domain/entities/board.model');
 const User = require('@domain/entities/user.model');
 const BoardList = require('@domain/entities/list.model');
 const registerTaskAsync = require('@features/board-tasks/register-task-command');
-var ObjectId = require('mongoose')
+var ObjectId = require('mongoose');
+const { default: mongoose } = require('mongoose');
 
 const getBoards = async (req, res) => {
     try {
@@ -20,12 +21,28 @@ const getBoardById = async (req, res) => {
             res.status(400).json({message: 'Provided Id is invalid'});
         }
 
-        const board = await Board.findById(id);
-        if(!board) {
+        const result = await Board.aggregate([
+            {
+                $match: {
+                    _id: mongoose.Types.ObjectId.createFromHexString(id),
+                }
+            },
+            {
+                $lookup: {
+                    from: 'lists',
+                    localField: '_id',
+                    foreignField: 'boardId',
+                    as: 'lists'
+                }
+            }
+        ]);
+
+        if(result.length > 0) {
+            res.status(200).json(result[0]);
+        } else {
             return res.status(404).json({ message: 'Board not found'});
         }
-
-        res.status(200).json(board);
+       
     } catch (error) {
         res.status(500).json({message: error.message});
     }
