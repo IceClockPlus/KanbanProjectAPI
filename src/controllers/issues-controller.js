@@ -2,6 +2,7 @@ const Issue = require('@domain/entities/issue.model');
 const List = require('@domain/entities/list.model');
 const Board = require('@domain/entities/board.model');
 const ObjectId = require('mongoose');
+const { default: mongoose } = require('mongoose');
 
 const getIssueById = async (req, res) => {
     const id = req.params.id;
@@ -20,20 +21,20 @@ const createIssue = async (req, res) => {
 
 
         if(body.boardId) {
-            const board = Board.aggregate([
-                { $match: {_id: ObjectId(body.boardId)}},
+            const board = await Board.aggregate([
+                { $match: {_id: mongoose.Types.ObjectId.createFromHexString(body.boardId)}},
                 {
                     $lookup: {
-                        from: 'Lists',
+                        from: 'lists',
                         localField: '_id',
                         foreignField: "boardId",
                         as: 'lists'
                     }
                 }
-            ]);
+            ])[1];
             
         }
-
+        
         const issue = new Issue({
            name: body.name,
            description: body.description,
