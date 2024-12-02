@@ -34,6 +34,7 @@ const options = {
 
 const specs = swaggerJsdoc(options);
 const mongoose = require('mongoose');
+const Board = require('@domain/entities/board.model');
 const app = express();
 
 const server = http.createServer(app); // Crear el servidor HTTP
@@ -60,6 +61,41 @@ app.use('/api/v1/issues', issueRoutes);
 
 io.on('connection', (socket) => {
     console.log('Client connected');
+
+    socket.on("boards", async (boardId) => {
+        try 
+        {
+            if(!mongoose.Types.ObjectId.isValid(boardId)){
+                socket.emit('error', {message: 'Board ID not valid'});
+            }
+
+            let boardAggr = await Board.aggregate([
+                {
+                    $match:{_id: mongoose.Types.ObjectId.createFromHexString(boardId)}
+                },
+                {
+                    $lookup:{
+                        from: 'lists',
+                        localField: '_id',
+                        foreignField: 'boardId',
+                        as: 'lists'
+                    }
+                }
+            ]);
+
+            if(boardAggr.length === 0){
+                socket.emit('error', {message: 'Board not found'});
+            }
+        
+            const board = boardAggr[0];
+            socket.join(boardId);
+            socket.emit('boardData', board);
+    
+        }catch(e) {
+            console.error('Error al obtener el tablero:', error);
+            socket.emit('error', { message: 'Unexpected error.' });
+        }
+    });
   
     // Handle messages from the client
     socket.on('message', (message) => {
