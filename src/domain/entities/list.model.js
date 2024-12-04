@@ -9,6 +9,7 @@ const issueListSchema = mongoose.Schema({
 const listSchema = mongoose.Schema({
     name: { type: String},
     maxIssues: { type: Number, required: false},
+    position: { type: Number },
     boardId: {
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Board'

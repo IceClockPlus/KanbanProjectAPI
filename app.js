@@ -76,8 +76,11 @@ io.on('connection', (socket) => {
                 {
                     $lookup:{
                         from: 'lists',
-                        localField: '_id',
-                        foreignField: 'boardId',
+                        let: { boardId: '$_id' },
+                        pipeline: [
+                            { $match: {$expr: {$eq: ['$boardId', '$$boardId']} } },
+                            { $sort: {position: 1}}
+                        ],
                         as: 'lists'
                     }
                 }
@@ -92,7 +95,7 @@ io.on('connection', (socket) => {
             socket.emit('boardData', board);
     
         }catch(e) {
-            console.error('Error al obtener el tablero:', error);
+            console.error('Error al obtener el tablero:', e);
             socket.emit('error', { message: 'Unexpected error.' });
         }
     });

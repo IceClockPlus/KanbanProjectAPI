@@ -71,14 +71,17 @@ const createBoard = async (req, res) => {
             {
                 name: 'To do',
                 boardId: newBoard._id,
+                position: 0
             },
             {
                 name: 'Working',
-                boardId: newBoard._id
+                boardId: newBoard._id,
+                position: 1
             },
             {
                 name: 'Done',
-                boardId: newBoard._id
+                boardId: newBoard._id,
+                position: 2
             }
         ];
         await BoardList.insertMany(listForNewBoard);
