@@ -62,7 +62,7 @@ app.use('/api/v1/issues', issueRoutes);
 io.on('connection', (socket) => {
     console.log('Client connected');
 
-    socket.on("boards", async (boardId) => {
+    socket.on("join board", async (boardId) => {
         try 
         {
             if(!mongoose.Types.ObjectId.isValid(boardId)){
@@ -97,7 +97,11 @@ io.on('connection', (socket) => {
         }catch(e) {
             console.error('Error al obtener el tablero:', e);
             socket.emit('error', { message: 'Unexpected error.' });
-        }
+        }        
+    });
+
+    socket.on("leave board", async (boardId) => {
+        await socket.leave(boardId);
     });
   
     // Handle messages from the client
@@ -116,8 +120,8 @@ io.on('connection', (socket) => {
 
 const dbConnection = process.env.MONGO_DB_CONNECTION || '';
 
-server.listen(3000, () => {
-    console.log('Servidor escuchando en http://localhost:3000');
+server.listen(port, () => {
+    console.log(`Servidor escuchando en http://localhost:${port}`);
 });
 
 
