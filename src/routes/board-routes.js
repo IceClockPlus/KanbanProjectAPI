@@ -112,6 +112,7 @@ const { authorize } = require('@middlewares/auth-middleware')
  *              description: Board not found
  */
 
+
 router.get('/', getBoards);
 router.get('/:id', getBoardById);
 router.post('/', authorize, createBoard);

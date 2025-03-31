@@ -6,6 +6,10 @@ var ObjectId = require('mongoose');
 const { default: mongoose } = require('mongoose');
 
 const getBoards = async (req, res) => {
+    /**
+     * #swagger.tags = ['Boards']
+     * #swagger.summary = 'Get all boards'
+     */
     try {
         const boards = await Board.find({});
         res.status(200).json(boards);

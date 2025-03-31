@@ -7,32 +7,12 @@ const swaggerUi = require('swagger-ui-express');
 const http = require('http');
 const {Server} = require('socket.io');
 
-const boardRoutes = require('@routes/board-routes');
-const userRoutes = require('@routes/user-routes');
-const issueRoutes = require('@routes/issue-routes');
+const routes = require('@routes/index');
+const swaggerFile = require('./swagger-output.json');
 
 
 const errorHadlerMiddleware = require('@middlewares/error-middleware')
 
-const options = {
-    definition: {
-        openapi: "3.1.0",
-        info: {
-            title: "Kanban Project API",
-            version: "1.0.0",
-            description: "This is a API documentation"
-        },
-        servers: [
-            {
-                url: "http://localhost:3000"
-            }
-        ]
-    },
-    apis: ["./routes/*.js"]
-
-};
-
-const specs = swaggerJsdoc(options);
 const mongoose = require('mongoose');
 const Board = require('@domain/entities/board.model');
 const app = express();
@@ -48,16 +28,15 @@ const port = process.env.PORT || 80;
 
 
 
-app.use('/api-docs',
-    swaggerUi.serve,
-    swaggerUi.setup(specs)
-);
 
 app.use(express.json());
 app.use(errorHadlerMiddleware);
-app.use('/api/v1/boards', boardRoutes);
-app.use('/api/v1/users', userRoutes);
-app.use('/api/v1/issues', issueRoutes);
+app.use('/api', routes);
+
+app.use('/api-docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerFile)
+);
 
 io.on('connection', (socket) => {
     console.log('Client connected');
